@@ -76,3 +76,27 @@ def delete_persona(db: Session, persona_id: int) -> None:
         raise PersonaNotFoundError()
     db.delete(obj)
     db.commit()
+
+from faker import Faker
+
+fake = Faker("es_CO")
+
+def poblar_personas(db, cantidad):
+
+    for _ in range(cantidad):
+
+        persona = Persona(
+            first_name=fake.first_name(),
+            last_name=fake.last_name(),
+            email=fake.email(),
+            phone=fake.phone_number(),
+            birth_date=fake.date_of_birth(),
+            is_active=True,
+            notes=fake.text(max_nb_chars=100)
+        )
+
+        db.add(persona)
+
+    db.commit()
+
+    return f"{cantidad} personas creadas correctamente"
