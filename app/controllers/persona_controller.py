@@ -37,13 +37,6 @@ def update_persona(persona_id: int, persona_in: PersonaUpdate, db: Session = Dep
     """Update an existing Persona (partial) via service layer."""
     return persona_service.update_persona(db, persona_id, persona_in)
 
-
-@router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_persona(persona_id: int, db: Session = Depends(get_db)):
-    """Delete a Persona by ID via service layer."""
-    persona_service.delete_persona(db, persona_id)
-    return None
-
 @router.post("/poblar")
 def poblar_personas(
     cantidad: int = Query(100, ge=1, le=1000),
@@ -60,3 +53,10 @@ def reset_personas(db: Session = Depends(get_db)):
 def estadisticas_dominios(db: Session = Depends(get_db)):
     """Retorna cuántas personas hay por dominio de correo."""
     return persona_service.estadisticas_dominios(db)
+
+@router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_persona(persona_id: int, db: Session = Depends(get_db)):
+    """Delete a Persona by ID via service layer."""
+    persona_service.delete_persona(db, persona_id)
+    return None
+
