@@ -50,3 +50,8 @@ def poblar_personas(
     db: Session = Depends(get_db)
 ):
     return persona_service.poblar_personas(db, cantidad)
+
+@router.delete("/reset", status_code=status.HTTP_200_OK)
+def reset_personas(db: Session = Depends(get_db)):
+    """Elimina todos los registros de la tabla personas."""
+    return persona_service.reset_personas(db)
