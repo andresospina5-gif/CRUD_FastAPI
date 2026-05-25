@@ -100,6 +100,7 @@ def poblar_personas(db, cantidad):
     db.commit()
 
     return f"{cantidad} personas creadas correctamente"
+
 def reset_personas(db: Session) -> dict:
     """Elimina todos los registros de la tabla personas."""
     deleted_count = db.query(Persona).count()
@@ -110,3 +111,12 @@ def reset_personas(db: Session) -> dict:
         "deleted_count": deleted_count
     }
 
+def estadisticas_dominios(db: Session) -> dict:
+    """Retorna cuántas personas hay por dominio de correo."""
+    from sqlalchemy import func
+    resultados = db.query(
+        func.substring_index(Persona.email, '@', -1).label("dominio"),
+        func.count(Persona.id).label("cantidad")
+    ).group_by("dominio").all()
+    
+    return {row.dominio: row.cantidad for row in resultados} 

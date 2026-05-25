@@ -55,3 +55,8 @@ def poblar_personas(
 def reset_personas(db: Session = Depends(get_db)):
     """Elimina todos los registros de la tabla personas."""
     return persona_service.reset_personas(db)
+
+@router.get("/estadisticas/dominios")
+def estadisticas_dominios(db: Session = Depends(get_db)):
+    """Retorna cuántas personas hay por dominio de correo."""
+    return persona_service.estadisticas_dominios(db)
