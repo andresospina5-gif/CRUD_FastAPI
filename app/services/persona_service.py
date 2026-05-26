@@ -78,6 +78,7 @@ def delete_persona(db: Session, persona_id: int) -> None:
     db.commit()
 
 from faker import Faker
+import random
 
 fake = Faker("es_CO")
 
@@ -88,7 +89,7 @@ def poblar_personas(db, cantidad):
         persona = Persona(
             first_name=fake.first_name(),
             last_name=fake.last_name(),
-            email=fake.email(),
+            email=f"{fake.user_name()}@{random.choice(['gmail.com','outlook.com','hotmail.com'])}",
             phone=fake.phone_number(),
             birth_date=fake.date_of_birth(),
             is_active=True,
