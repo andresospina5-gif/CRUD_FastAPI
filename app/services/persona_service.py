@@ -171,6 +171,8 @@ def estadisticas_edad(db: Session):
         func.avg(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("promedio"),
         func.min(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("minima"),
         func.max(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("maxima"),
+    ).filter(
+        func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate()) > 0
     ).one()
     # round() redondea el promedio para retornar un número entero
     return {
