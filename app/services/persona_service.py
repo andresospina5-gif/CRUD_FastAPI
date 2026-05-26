@@ -100,7 +100,9 @@ def poblar_personas(db, cantidad):
 
     db.commit()
 
-    return f"{cantidad} personas creadas correctamente"
+    return {
+    "message": f"{cantidad} personas creadas correctamente"
+}
 
 def reset_personas(db: Session) -> dict:
     """Elimina todos los registros de la tabla personas."""
