@@ -42,3 +42,14 @@ class PersonaRead(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+class PoblarRequest(BaseModel):
+    """
+    Schema para poblar personas
+    """
+
+    cantidad: int = Field(
+        ...,
+        gt=0,
+        le=1000
+    )
