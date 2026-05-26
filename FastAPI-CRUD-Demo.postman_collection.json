@@ -144,7 +144,7 @@
         }
       ]
     },
-    {
+    { 
       "name": "Health",
       "request": {
         "method": "GET",
