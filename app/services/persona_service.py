@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
+from sqlalchemy import or_
 
 
 def create_persona(db: Session, payload: PersonaCreate) -> Persona:
@@ -123,3 +124,20 @@ def estadisticas_dominios(db: Session) -> dict:
     ).group_by("dominio").all()
     
     return {row.dominio: row.cantidad for row in resultados} 
+
+def buscar_personas(
+    db: Session,
+    termino: str
+):
+    """
+    Busca coincidencias en
+    nombre apellido o correo
+    """
+
+    return db.query(Persona).filter(
+        or_(
+            Persona.first_name.ilike(f"%{termino}%"),
+            Persona.last_name.ilike(f"%{termino}%"),
+            Persona.email.ilike(f"%{termino}%")
+        )
+    ).all()
