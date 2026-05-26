@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
-from sqlalchemy import or_
+from sqlalchemy import or_, text
 
 
 def create_persona(db: Session, payload: PersonaCreate) -> Persona:
@@ -142,3 +142,32 @@ el término ingresado.
             Persona.email.ilike(f"%{termino}%")
         )
     ).all()
+
+def reporte_activos(db: Session):
+    """Retorna usuarios activos con proyección reducida."""
+    resultados = db.query(Persona).filter(Persona.is_active == True).all()
+    return [
+        {
+            "id": p.id,
+            "email": p.email,
+            "phone": p.phone,
+            "is_active": p.is_active
+        }
+        for p in resultados
+    ]
+
+def estadisticas_edad(db: Session):
+    """Calcula edad promedio, mínima y máxima."""
+    from sqlalchemy import func
+    from datetime import date
+    hoy = date.today()
+    resultado = db.query(
+        func.avg(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("promedio"),
+        func.min(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("minima"),
+        func.max(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("maxima"),
+    ).one()
+    return {
+        "edad_promedio": round(resultado.promedio) if resultado.promedio else 0,
+        "edad_minima": resultado.minima or 0,
+        "edad_maxima": resultado.maxima or 0
+    }

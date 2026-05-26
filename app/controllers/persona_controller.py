@@ -54,6 +54,16 @@ def estadisticas_dominios(db: Session = Depends(get_db)):
     """Retorna cuántas personas hay por dominio de correo."""
     return persona_service.estadisticas_dominios(db)
 
+@router.get("/reporte/activos")
+def reporte_activos(db: Session = Depends(get_db)):
+    """Retorna usuarios activos con proyección reducida."""
+    return persona_service.reporte_activos(db)
+
+@router.get("/estadisticas/edad")
+def estadisticas_edad(db: Session = Depends(get_db)):
+    """Retorna edad promedio, mínima y máxima."""
+    return persona_service.estadisticas_edad(db)
+
 @router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     """Delete a Persona by ID via service layer."""
