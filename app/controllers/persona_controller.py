@@ -56,7 +56,11 @@ def estadisticas_dominios(db: Session = Depends(get_db)):
 
 @router.get("/reporte/activos")
 def reporte_activos(db: Session = Depends(get_db)):
-    """Retorna usuarios activos con proyección reducida."""
+    """
+    Retorna usuarios activos con proyección reducida.
+    Solo se retornan id, email, phone e is_active para cada usuario activo.
+    Filtra únicamente usuarios donde is_active = True.
+    """
     return persona_service.reporte_activos(db)
 
 @router.get("/estadisticas/edad")
