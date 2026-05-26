@@ -92,7 +92,7 @@ def poblar_personas(db, cantidad):
             email=f"{fake.user_name()}@{random.choice(['gmail.com','outlook.com','hotmail.com'])}",
             phone=fake.phone_number(),
             birth_date=fake.date_of_birth(),
-            is_active=True,
+            is_active=random.choice([True, False]),
             notes=fake.text(max_nb_chars=100)
         )
 
