@@ -164,11 +164,15 @@ def estadisticas_edad(db: Session):
     from sqlalchemy import func
     from datetime import date
     hoy = date.today()
+    
+    # TIMESTAMPDIFF calcula la diferencia en años entre birth_date y la fecha actual
+    # AVG calcula el promedio, MIN el mínimo y MAX el máximo
     resultado = db.query(
         func.avg(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("promedio"),
         func.min(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("minima"),
         func.max(func.timestampdiff(text('YEAR'), Persona.birth_date, func.curdate())).label("maxima"),
     ).one()
+    # round() redondea el promedio para retornar un número entero
     return {
         "edad_promedio": round(resultado.promedio) if resultado.promedio else 0,
         "edad_minima": resultado.minima or 0,
