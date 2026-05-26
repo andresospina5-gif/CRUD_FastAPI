@@ -145,7 +145,10 @@ el término ingresado.
 
 def reporte_activos(db: Session):
     """Retorna usuarios activos con proyección reducida."""
+     # Filtra solo los usuarios donde is_active es True
     resultados = db.query(Persona).filter(Persona.is_active == True).all()
+    # Retorna solo los campos necesarios (proyección)
+    # No se retorna toda la información del usuario, solo id, email, phone e is_active
     return [
         {
             "id": p.id,
