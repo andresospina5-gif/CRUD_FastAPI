@@ -54,6 +54,9 @@ def estadisticas_dominios(db: Session = Depends(get_db)):
     """Retorna cuántas personas hay por dominio de correo."""
     return persona_service.estadisticas_dominios(db)
 
+# IMPORTANTE: estas rutas deben ir antes de /{persona_id}
+# para que FastAPI no las interprete como un ID numérico
+
 @router.get("/reporte/activos")
 def reporte_activos(db: Session = Depends(get_db)):
     """
