@@ -65,7 +65,11 @@ def reporte_activos(db: Session = Depends(get_db)):
 
 @router.get("/estadisticas/edad")
 def estadisticas_edad(db: Session = Depends(get_db)):
-    """Retorna edad promedio, mínima y máxima."""
+    """
+    Retorna edad promedio, mínima y máxima.
+    Retorna edad promedio, mínima y máxima de todos los registros.
+    Usa TIMESTAMPDIFF de MySQL para calcular la edad exacta.
+    """
     return persona_service.estadisticas_edad(db)
 
 @router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
