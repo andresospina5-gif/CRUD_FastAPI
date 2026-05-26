@@ -70,3 +70,17 @@ def poblar_personas(
         db,
         payload.cantidad
     )
+
+@router.get(
+    "/buscar/{termino}",
+    response_model=list[PersonaRead]
+)
+def buscar_personas(
+    termino: str,
+    db: Session = Depends(get_db)
+):
+
+    return persona_service.buscar_personas(
+        db,
+        termino
+    )
