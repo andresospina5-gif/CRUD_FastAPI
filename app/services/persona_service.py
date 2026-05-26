@@ -130,9 +130,10 @@ def buscar_personas(
     termino: str
 ):
     """
-    Busca coincidencias en
-    nombre apellido o correo
-    """
+Busca personas cuyo nombre,
+apellido o correo contenga
+el término ingresado.
+"""
 
     return db.query(Persona).filter(
         or_(

@@ -73,7 +73,9 @@ def poblar_personas(
 
 @router.get(
     "/buscar/{termino}",
-    response_model=list[PersonaRead]
+    response_model=list[PersonaRead],
+    summary="Buscar personas",
+    description="Busca coincidencias por nombre, apellido o correo"
 )
 def buscar_personas(
     termino: str,
