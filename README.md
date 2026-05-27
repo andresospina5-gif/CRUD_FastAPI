@@ -11,6 +11,38 @@ Proyecto de demostración con FastAPI + SQLAlchemy y estructura MVC para un CRUD
 | **Daniel** | `GET /personas/estadisticas/edad` — Edad promedio, mínima y máxima. `GET /personas/reporte/activos` — Lista usuarios activos. |
 | **Lorena** | `GET /personas/cumpleanios/mes/{numero_mes}` — Filtra cumpleaños por mes. `PATCH /personas/bulk/desactivar` — Desactivación masiva. `GET /personas/exportar/csv` — Exporta CSV. |
 
+## Nuevos Endpoints (Laboratorio 1)
+
+### Operaciones Masivas
+- `POST /personas/poblar` → Genera N personas con Faker (body: `{"cantidad": 50}`)
+- `DELETE /personas/reset` → Elimina todos los registros de la tabla
+
+### Analítica y Agregaciones
+- `GET /personas/estadisticas/dominios` → Cuenta personas por dominio de correo
+- `GET /personas/estadisticas/edad` → Edad promedio, mínima y máxima
+
+### Búsqueda y Proyección
+- `GET /personas/buscar/{termino}` → Busca en nombre, apellido y email
+- `GET /personas/reporte/activos` → Lista usuarios activos (id, email, phone, is_active)
+
+### Filtros por Fecha
+- `GET /personas/cumpleanios/mes/{numero_mes}` → Personas que cumplen años en el mes (1-12)
+
+### Operaciones Bulk
+- `PATCH /personas/bulk/desactivar` → Desactiva masivamente por lista de IDs
+
+### Exportación
+- `GET /personas/exportar/csv` → Descarga todos los registros en formato CSV
+
+## Endpoints CRUD base
+
+- `GET /health` → estado del servicio
+- `POST /personas` → crear persona
+- `GET /personas` → listar personas (`skip`, `limit`)
+- `GET /personas/{id}` → obtener persona por ID
+- `PUT /personas/{id}` → actualizar (parcial) persona
+- `DELETE /personas/{id}` → eliminar persona
+
 ## Requisitos
 
 - Python 3.10+ (recomendado 3.11)
@@ -18,23 +50,23 @@ Proyecto de demostración con FastAPI + SQLAlchemy y estructura MVC para un CRUD
 ## Instalación y ejecución
 
 1. Crear entorno virtual e instalar dependencias:
-   ```bash
+```bash
    python3 -m venv .venv
    source .venv/bin/activate
    pip install -r requirements.txt
-   ```
+```
 
 2. Configurar variables de entorno:
-   ```bash
+```bash
    cp .env.example .env
    # Edita .env con tus credenciales de MySQL
    # Por defecto: DATABASE_URL=mysql+pymysql://user:password@localhost:3306/fastapi_demo
-   ```
+```
 
 3. Ejecutar el servidor:
-   ```bash
+```bash
    uvicorn app.main:app --reload
-   ```
+```
 
 4. Documentación interactiva:
    - Swagger UI: <http://localhost:8000/docs>
@@ -53,21 +85,10 @@ Edita `DATABASE_URL` en `.env`.
 DATABASE_URL=mysql+pymysql://usuario:contraseña@localhost:3306/nombre_basedatos
 ```
 
-## Endpoints principales
-
-- `GET /health` → estado del servicio
-- `POST /personas` → crear persona
-- `GET /personas` → listar personas (`skip`, `limit`)
-- `GET /personas/{id}` → obtener persona por ID
-- `PUT /personas/{id}` → actualizar (parcial) persona
-- `GET /personas/reporte/activos` → lista usuarios activos (proyección reducida)
-- `GET /personas/estadisticas/edad` → edad promedio, mínima y máxima
-- `DELETE /personas/{id}` → eliminar persona
-
 ### Esquemas (JSON)
 
 - Crear:
-  ```json
+```json
   {
     "first_name": "Juan",
     "last_name": "Pérez",
@@ -77,15 +98,15 @@ DATABASE_URL=mysql+pymysql://usuario:contraseña@localhost:3306/nombre_basedatos
     "is_active": true,
     "notes": "Cliente frecuente"
   }
-  ```
+```
 
 - Actualizar (parcial):
-  ```json
+```json
   {
     "email": "juan.perez2@example.com",
     "notes": "Actualizado"
   }
-  ```
+```
 
 ## Colección de Postman
 
@@ -137,6 +158,7 @@ curl -s -X PUT http://127.0.0.1:8000/personas/1 \
 
 # Eliminar
 curl -s -X DELETE http://127.0.0.1:8000/personas/1 -i
+```
 
 ## Detener el servidor
 
