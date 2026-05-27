@@ -2,6 +2,15 @@
 
 Proyecto de demostración con FastAPI + SQLAlchemy y estructura MVC para un CRUD de `Persona`. Usa MySQL por defecto y permite apuntar a otra base SQL mediante la variable de entorno `DATABASE_URL` (configurable en `.env`).
 
+## Equipo 4 — Laboratorio 1
+
+| Integrante | Endpoints desarrollados |
+|------------|------------------------|
+| **Andrés** | `POST /personas/poblar` — Carga masiva con Faker. `GET /personas/buscar/{termino}` — Búsqueda en nombre, apellido y email. |
+| **Yasleidy** | `DELETE /personas/reset` — Limpia toda la tabla. `GET /personas/estadisticas/dominios` — Agrupa por proveedor de correo. |
+| **Daniel** | `GET /personas/estadisticas/edad` — Edad promedio, mínima y máxima. `GET /personas/reporte/activos` — Lista usuarios activos. |
+| **Lorena** | `GET /personas/cumpleanios/mes/{numero_mes}` — Filtra cumpleaños por mes. `PATCH /personas/bulk/desactivar` — Desactivación masiva. `GET /personas/exportar/csv` — Exporta CSV. |
+
 ## Requisitos
 
 - Python 3.10+ (recomendado 3.11)
