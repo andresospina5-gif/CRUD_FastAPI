@@ -46,6 +46,8 @@ Proyecto de demostración con FastAPI + SQLAlchemy y estructura MVC para un CRUD
 ## Requisitos
 
 - Python 3.10+ (recomendado 3.11)
+- MySQL 
+- Faker (generación de datos de prueba): `pip install faker`
 
 ## Instalación y ejecución
 
