@@ -109,6 +109,32 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Estadísticas Edad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas/estadisticas/edad",
+              "host": ["{{base_url}}"],
+              "path": ["personas","estadisticas","edad"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reporte Activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas/reporte/activos",
+              "host": ["{{base_url}}"],
+              "path": ["personas","reporte","activos"]
+            }
+          },
+          "response": []
         }
       ]
     },
