@@ -14,24 +14,15 @@
           "name": "Create Persona",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{"key": "Content-Type","value": "application/json"}],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Pérez\",\n  \"email\": \"juan.perez@example.com\",\n  \"phone\": \"+57 3000000000\",\n  \"birth_date\": \"1990-05-20\",\n  \"is_active\": true,\n  \"notes\": \"Cliente frecuente\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/personas",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "personas"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["personas"]
             }
           },
           "response": []
@@ -43,22 +34,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/personas?skip=0&limit=100",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "personas"
-              ],
-              "query": [
-                {
-                  "key": "skip",
-                  "value": "0"
-                },
-                {
-                  "key": "limit",
-                  "value": "100"
-                }
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["personas"],
+              "query": [{"key": "skip","value": "0"},{"key": "limit","value": "100"}]
             }
           },
           "response": []
@@ -70,13 +48,8 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/personas/{{persona_id}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "personas",
-                "{{persona_id}}"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["personas","{{persona_id}}"]
             }
           },
           "response": []
@@ -85,42 +58,16 @@
           "name": "Update Persona",
           "request": {
             "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{"key": "Content-Type","value": "application/json"}],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"juan.perez2@example.com\",\n  \"notes\": \"Actualizado\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/personas/{{persona_id}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "personas",
-                "{{persona_id}}"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["personas","{{persona_id}}"]
             }
-          },
-          "response": []
-        },
-        {
-          "name": "Reporte Activos",
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
-        },
-        {
-          "name": "Estadísticas Edad",
-          "request": {
-            "method": "GET",
-            "header": []
           },
           "response": []
         },
@@ -131,45 +78,56 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/personas/{{persona_id}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "personas",
-                "{{persona_id}}"
-              ]
+              "host": ["{{base_url}}"],
+              "path": ["personas","{{persona_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Personas",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas/reset",
+              "host": ["{{base_url}}"],
+              "path": ["personas","reset"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Estadísticas Dominios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas/estadisticas/dominios",
+              "host": ["{{base_url}}"],
+              "path": ["personas","estadisticas","dominios"]
             }
           },
           "response": []
         }
       ]
     },
-    { 
+    {
       "name": "Health",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
           "raw": "{{base_url}}/health",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "health"
-          ]
+          "host": ["{{base_url}}"],
+          "path": ["health"]
         }
       },
       "response": []
     }
   ],
   "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:8000"
-    },
-    {
-      "key": "persona_id",
-      "value": "1"
-    }
+    {"key": "base_url","value": "http://localhost:8000"},
+    {"key": "persona_id","value": "1"}
   ]
 }
