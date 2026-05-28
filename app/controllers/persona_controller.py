@@ -45,6 +45,27 @@ def poblar_personas(
 ):
     return persona_service.poblar_personas(db, cantidad)
 
+# IMPORTANTE: estas rutas deben ir antes de /{persona_id}
+# para que FastAPI no las interprete como un ID numérico
+
+@router.get("/reporte/activos")
+def reporte_activos(db: Session = Depends(get_db)):
+    """
+    Retorna usuarios activos con proyección reducida.
+    Solo se retornan id, email, phone e is_active para cada usuario activo.
+    Filtra únicamente usuarios donde is_active = True.
+    """
+    return persona_service.reporte_activos(db)
+
+@router.get("/estadisticas/edad")
+def estadisticas_edad(db: Session = Depends(get_db)):
+    """
+    Retorna edad promedio, mínima y máxima.
+    Retorna edad promedio, mínima y máxima de todos los registros.
+    Usa TIMESTAMPDIFF de MySQL para calcular la edad exacta.
+    """
+    return persona_service.estadisticas_edad(db)
+
 @router.delete("/reset", status_code=status.HTTP_200_OK)
 def reset_personas(db: Session = Depends(get_db)):
     """Elimina todos los registros de la tabla personas."""
