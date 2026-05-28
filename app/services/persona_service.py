@@ -5,14 +5,12 @@ from sqlalchemy.exc import IntegrityError
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
-<<<<<<< HEAD
+
 from sqlalchemy import or_, text
-=======
+
 from sqlalchemy import or_
 import csv
 from io import StringIO
->>>>>>> 9939627 (Agregar exportación de personas a CSV)
-
 
 def create_persona(db: Session, payload: PersonaCreate) -> Persona:
     """Create a Persona ensuring unique email."""
