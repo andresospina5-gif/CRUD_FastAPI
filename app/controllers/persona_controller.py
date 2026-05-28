@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..views.persona import PersonaCreate, PersonaUpdate, PersonaRead, PoblarRequest
 from ..services import persona_service
+from fastapi.responses import StreamingResponse
 
 router = APIRouter(prefix="/personas", tags=["personas"])
 
@@ -54,27 +55,6 @@ def estadisticas_dominios(db: Session = Depends(get_db)):
     """Retorna cuántas personas hay por dominio de correo."""
     return persona_service.estadisticas_dominios(db)
 
-# IMPORTANTE: estas rutas deben ir antes de /{persona_id}
-# para que FastAPI no las interprete como un ID numérico
-
-@router.get("/reporte/activos")
-def reporte_activos(db: Session = Depends(get_db)):
-    """
-    Retorna usuarios activos con proyección reducida.
-    Solo se retornan id, email, phone e is_active para cada usuario activo.
-    Filtra únicamente usuarios donde is_active = True.
-    """
-    return persona_service.reporte_activos(db)
-
-@router.get("/estadisticas/edad")
-def estadisticas_edad(db: Session = Depends(get_db)):
-    """
-    Retorna edad promedio, mínima y máxima.
-    Retorna edad promedio, mínima y máxima de todos los registros.
-    Usa TIMESTAMPDIFF de MySQL para calcular la edad exacta.
-    """
-    return persona_service.estadisticas_edad(db)
-
 @router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     """Delete a Persona by ID via service layer."""
@@ -106,4 +86,22 @@ def buscar_personas(
     return persona_service.buscar_personas(
         db,
         termino
+    )
+
+@router.get("/exportar/csv")
+def exportar_personas_csv(
+    db: Session = Depends(get_db)
+):
+    """
+    Exporta todas las personas en CSV descargable.
+    """
+
+    output = persona_service.exportar_personas_csv(db)
+
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=personas.csv"
+        }
     )
