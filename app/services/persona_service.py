@@ -5,7 +5,13 @@ from sqlalchemy.exc import IntegrityError
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
+<<<<<<< HEAD
 from sqlalchemy import or_, text
+=======
+from sqlalchemy import or_
+import csv
+from io import StringIO
+>>>>>>> 9939627 (Agregar exportación de personas a CSV)
 
 
 def create_persona(db: Session, payload: PersonaCreate) -> Persona:
@@ -143,6 +149,7 @@ el término ingresado.
         )
     ).all()
 
+
 def reporte_activos(db: Session):
     """Retorna usuarios activos con proyección reducida."""
      # Filtra solo los usuarios donde is_active es True
@@ -183,3 +190,46 @@ def estadisticas_edad(db: Session):
         "edad_minima": resultado.minima or 0,
         "edad_maxima": resultado.maxima or 0
     }
+
+def exportar_personas_csv(db: Session):
+    """
+    Exporta todas las personas en formato CSV.
+    """
+
+    personas = db.query(Persona).all()
+
+    output = StringIO()
+
+    writer = csv.writer(output)
+
+    # Encabezados
+    writer.writerow([
+        "id",
+        "first_name",
+        "last_name",
+        "email",
+        "phone",
+        "birth_date",
+        "is_active",
+        "notes",
+        "created_at"
+    ])
+
+    # Datos
+    for persona in personas:
+        writer.writerow([
+            persona.id,
+            persona.first_name,
+            persona.last_name,
+            persona.email,
+            persona.phone,
+            persona.birth_date,
+            persona.is_active,
+            persona.notes,
+            persona.created_at
+        ])
+
+    output.seek(0)
+
+    return output
+
