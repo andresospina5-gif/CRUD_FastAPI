@@ -55,6 +55,19 @@ def estadisticas_dominios(db: Session = Depends(get_db)):
     """Retorna cuántas personas hay por dominio de correo."""
     return persona_service.estadisticas_dominios(db)
 
+from pydantic import BaseModel
+
+class BulkDesactivarRequest(BaseModel):
+    ids: list[int]
+
+@router.patch("/bulk/desactivar")
+def bulk_desactivar(payload: BulkDesactivarRequest, db: Session = Depends(get_db)):
+    """Desactiva masivamente personas por lista de IDs."""
+    if len(payload.ids) == 0 or len(payload.ids) > 100:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail="La lista debe tener entre 1 y 100 IDs.")
+    return persona_service.bulk_desactivar(db, payload.ids)
+
 @router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     """Delete a Persona by ID via service layer."""

@@ -231,3 +231,24 @@ def exportar_personas_csv(db: Session):
 
     return output
 
+def bulk_desactivar(db: Session, ids: list[int]) -> dict:
+    """Desactiva masivamente personas por lista de IDs."""
+    # Busca cuáles IDs existen en la base de datos
+    existentes = db.query(Persona).filter(Persona.id.in_(ids)).all()
+    ids_existentes = [p.id for p in existentes]
+    
+    # Los que no existen son los que están en ids pero no en ids_existentes
+    ids_no_encontrados = [i for i in ids if i not in ids_existentes]
+    
+    # Desactiva los que sí existen
+    for persona in existentes:
+        persona.is_active = False
+    
+    db.commit()
+    
+    return {
+        "message": "Operación completada.",
+        "desactivados": ids_existentes,
+        "no_encontrados": ids_no_encontrados,
+        "total_desactivados": len(ids_existentes)
+    }
