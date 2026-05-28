@@ -252,3 +252,9 @@ def bulk_desactivar(db: Session, ids: list[int]) -> dict:
         "no_encontrados": ids_no_encontrados,
         "total_desactivados": len(ids_existentes)
     }
+
+def cumpleanios_por_mes(db: Session, mes: int):
+    """Retorna personas que cumplen años en el mes especificado."""
+    return db.query(Persona).filter(
+        func.month(Persona.birth_date) == mes
+    ).all()
