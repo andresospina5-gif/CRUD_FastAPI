@@ -6,7 +6,7 @@ from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
 
-from sqlalchemy import or_, text
+from sqlalchemy import or_, text, func
 
 from sqlalchemy import or_
 import csv
@@ -255,6 +255,7 @@ def bulk_desactivar(db: Session, ids: list[int]) -> dict:
 
 def cumpleanios_por_mes(db: Session, mes: int):
     """Retorna personas que cumplen años en el mes especificado."""
+    from sqlalchemy import func
     return db.query(Persona).filter(
         func.month(Persona.birth_date) == mes
     ).all()
