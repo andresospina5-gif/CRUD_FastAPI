@@ -1,0 +1,191 @@
+{
+  "info": {
+    "_postman_id": "7ab3abc7-d675-4503-9db0-965eed16cee3",
+    "name": "FastAPI Persona CRUD (MySQL)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55255075",
+    "_collection_link": "https://go.postman.co/collection/55255075-7ab3abc7-d675-4503-9db0-965eed16cee3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Personas",
+      "item": [
+        {
+          "name": "Create Persona",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Pérez\",\n  \"email\": \"juan.perez@example.com\",\n  \"phone\": \"+57 3000000000\",\n  \"birth_date\": \"1990-05-20\",\n  \"is_active\": true,\n  \"notes\": \"Cliente frecuente\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/personas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "personas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Personas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas?skip=0&limit=100",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "personas"
+              ],
+              "query": [
+                {
+                  "key": "skip",
+                  "value": "0"
+                },
+                {
+                  "key": "limit",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Persona by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas/{{persona_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "personas",
+                "{{persona_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Persona",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"juan.perez2@example.com\",\n  \"notes\": \"Actualizado\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/personas/{{persona_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "personas",
+                "{{persona_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reporte Activos",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Estadísticas Edad",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Persona",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/personas/{{persona_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "personas",
+                "{{persona_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bulk desactivar",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Poblar personas",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "persona_id",
+      "value": "1"
+    }
+  ]
+}
